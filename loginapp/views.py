@@ -1,15 +1,18 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 def signup(request):
 
     if request.method == 'POST':
         username = request.POST.get('username')
-        email = request.POST.get('email')
+        full_name = request.POST.get('full_name')
+        phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
 
-        user = User.objects.create_user(username = username, email = email, password = password)
+        user = User.objects.create_user(username = username, full_name = full_name, phone_number=phone_number, password = password)
         user.save()
         return redirect('loginpage')
 
